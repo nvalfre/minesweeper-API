@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	uuid2 "github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -58,7 +59,8 @@ func init() {
 
 func Start() {
 
-	router.InitRoutes()
+	r := gin.Default()
+	router.InitRoutes(r)
 
 	app := &cli.App{
 		Name:  "Gamer Starter",
@@ -165,13 +167,16 @@ func Start() {
 	}
 
 	err := app.Run(os.Args)
+	r.Run()
+
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func createGame(game *domain.Games) error {
-	_, err := gameCollectionAccess.InsertOne(ctx, game)
+	result, err := gameCollectionAccess.InsertOne(ctx, game)
+	fmt.Sprintf("Game created: %s", result)
 	return err
 }
 

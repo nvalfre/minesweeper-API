@@ -16,9 +16,7 @@ const userLogout = "/logout"
 const newGame = "/game"
 const newMovement = "/game/movement"
 
-func InitRoutes() {
-
-	r := gin.Default()
+func InitRoutes(r *gin.Engine) {
 
 	r.GET(pingEndpoint, ping.Ping())
 	r.POST(userCreateEndpoint, user.Controller.CreateUser)
@@ -27,5 +25,4 @@ func InitRoutes() {
 	r.POST(newGame, game.Controller.CreateNewGame)
 	r.POST(newMovement, movement.Controller.PostMovement)
 
-	r.Run()
 }
