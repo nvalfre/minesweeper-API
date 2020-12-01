@@ -176,13 +176,11 @@ func createGame(game *domain.Games) error {
 }
 
 func getAll() ([]*domain.Games, error) {
-	// passing bson.D{{}} matches all documents in the collection
 	filter := bson.D{{}}
 	return filterGames(filter)
 }
 
 func filterGames(filter interface{}) ([]*domain.Games, error) {
-	// A slice of games for storing the decoded documents
 	var games []*domain.Games
 
 	cur, err := gameCollectionAccess.Find(ctx, filter)
@@ -190,7 +188,6 @@ func filterGames(filter interface{}) ([]*domain.Games, error) {
 		return games, err
 	}
 
-	// Iterate through the cursor and decode each document one at a time
 	for cur.Next(ctx) {
 		var t domain.Games
 		err := cur.Decode(&t)
@@ -205,7 +202,6 @@ func filterGames(filter interface{}) ([]*domain.Games, error) {
 		return games, err
 	}
 
-	// once exhausted, close the cursor
 	cur.Close(ctx)
 
 	if len(games) == 0 {
