@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	uuid2 "github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -74,6 +75,15 @@ type Actions struct {
 }
 
 func main() {
+
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run()
+
 	app := &cli.App{
 		Name:  "Gamer Starter",
 		Usage: "A simple CLI program to manage games",
