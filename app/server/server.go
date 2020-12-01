@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	uuid2 "github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -19,16 +18,24 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var collection *mongo.Collection
-var ctx = context.TODO()
-var dbName = "minesweeper"
-var collectionName = "games"
+var userCollectionAccess *mongo.Collection
+var gameCollectionAccess *mongo.Collection
+var movementCollectionAccess *mongo.Collection
+var positionsCollectionAccess *mongo.Collection
 
+var ctx = context.TODO()
+
+const dbName = "minesweeper"
+const userCollection = "user"
+const gameCollection = "game"
+const movementCollection = "movement"
+const positionsCollection = "positions"
+const mongoUri = "mongodb+srv://nvalfre:Ohsinico123@cluster0.q3qjp.mongodb.net/<dbname>?retryWrites=true&w=majority"
 const gameStartedStatus = "Started"
 const defaultDurationTime = 10 * time.Minute
 
 func init() {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017/")
+	clientOptions := options.Client().ApplyURI(mongoUri)
 	client, err := mongo.Connect(ctx, clientOptions)
 
 	_ = fmt.Sprint(uuid2.NewUUID())
@@ -43,7 +50,10 @@ func init() {
 	fmt.Println("Connected to MongoDB!")
 
 	database := client.Database(dbName)
-	collection = database.Collection(collectionName)
+	userCollectionAccess = database.Collection(userCollection)
+	gameCollectionAccess = database.Collection(gameCollection)
+	movementCollectionAccess = database.Collection(movementCollection)
+	positionsCollectionAccess = database.Collection(positionsCollection)
 }
 
 func Start() {
@@ -78,9 +88,8 @@ func Start() {
 					}
 
 					game := &domain.Games{
-						ID:        primitive.NewObjectID(),
-						CreatedAt: time.Now(),
-						UpdatedAt: time.Now(),
+						ID:          primitive.NewObjectID(),
+						DateCreated: time.Now(),
 						Details: domain.Details{
 							Board: &domain.Board{
 								Positions: nil,
@@ -162,7 +171,7 @@ func Start() {
 }
 
 func createGame(game *domain.Games) error {
-	_, err := collection.InsertOne(ctx, game)
+	_, err := gameCollectionAccess.InsertOne(ctx, game)
 	return err
 }
 
@@ -176,7 +185,7 @@ func filterGames(filter interface{}) ([]*domain.Games, error) {
 	// A slice of games for storing the decoded documents
 	var games []*domain.Games
 
-	cur, err := collection.Find(ctx, filter)
+	cur, err := gameCollectionAccess.Find(ctx, filter)
 	if err != nil {
 		return games, err
 	}
@@ -214,7 +223,7 @@ func completeGames(text string) error {
 	}}}
 
 	t := &domain.Games{}
-	return collection.FindOneAndUpdate(ctx, filter, update).Decode(t)
+	return gameCollectionAccess.FindOneAndUpdate(ctx, filter, update).Decode(t)
 }
 
 func getPending() ([]*domain.Games, error) {
@@ -236,7 +245,7 @@ func getFinished() ([]*domain.Games, error) {
 func deleteGame(text string) error {
 	filter := bson.D{primitive.E{Key: "text", Value: text}}
 
-	res, err := collection.DeleteOne(ctx, filter)
+	res, err := gameCollectionAccess.DeleteOne(ctx, filter)
 	if err != nil {
 		return err
 	}

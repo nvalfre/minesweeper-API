@@ -6,14 +6,13 @@ import (
 )
 
 type Games struct {
-	ID        primitive.ObjectID
-	UserUUID  string      `bson:"game_uuid"`
-	CreatedAt time.Time   `bson:"created_at"`
-	UpdatedAt time.Time   `bson:"updated_at"`
-	UserID    string      `bson:"user_id"`
-	Finished  bool        `bson:"finished"`
-	Timer     *time.Timer `bson:"timer"`
-	Details   Details     `bson:"game_details"`
+	ID          primitive.ObjectID
+	UserUUID    string      `bson:"game_uuid"`
+	DateCreated time.Time   `bson:"date_created"`
+	UserID      string      `bson:"user_id"`
+	Finished    bool        `bson:"finished"`
+	Timer       *time.Timer `bson:"timer"`
+	Details     Details     `bson:"game_details"`
 }
 
 type Details struct {
@@ -29,6 +28,7 @@ type Board struct {
 
 type Positions struct {
 	status string `bson:"positions"`
+	bombs  int    `bson:"int"`
 }
 
 type Actions struct {
