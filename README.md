@@ -1,7 +1,11 @@
-Golang minesweeper game - rest api
-Description: https://github.com/deviget/minesweeper-API
+**_Golang minesweeper game - rest api_**
 
-Core tasks:
+# minesweeper-API
+minesweeper-API-server
+
+####Description: https://github.com/deviget/minesweeper-API
+
+**Core tasks:**
     Design and implement a documented RESTful API for the game (think of a mobile app for your API)
     Implement an API client library for the API designed above. Ideally, in a different language, of your preference, to the one used for the API
     When a cell with no adjacent mines is revealed, all adjacent squares will be revealed (and repeat)
@@ -13,7 +17,8 @@ Core tasks:
     Ability to select the game parameters: number of rows, columns, and mines
     Ability to support multiple users/accounts
     
-Backend Requierements:
+### Backlog
+**Backend Requierements:**
   - Setup environment
   - Generate connection with mongo client
   - Generate ping controller
@@ -67,7 +72,7 @@ Backend Requierements:
     - Action
     - Session
     
-Frontend - Client side - Pretended: flutter app with dart.
+**Frontend - Client side - Pretended: flutter app with dart.**
   - Setup env
   - Setup rest providers with http calls
   - Setup routes & views
@@ -79,6 +84,3 @@ Frontend - Client side - Pretended: flutter app with dart.
   - Build game history view just list by user.
   - Deploy onto github with hummingbird
   
-
-# minesweeper-API
-minesweeper-API-server

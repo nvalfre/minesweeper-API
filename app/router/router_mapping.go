@@ -1,6 +1,13 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"minesweeper-API/controllers/auth"
+	"minesweeper-API/controllers/game"
+	"minesweeper-API/controllers/movement"
+	"minesweeper-API/controllers/ping"
+	"minesweeper-API/controllers/user"
+)
 
 const pingEndpoint = "/ping"
 const userCreateEndpoint = "/user"
@@ -13,11 +20,12 @@ func InitRoutes() {
 
 	r := gin.Default()
 
-	r.GET(pingEndpoint, func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET(pingEndpoint, ping.Ping())
+	r.POST(userCreateEndpoint, user.Controller.CreateUser)
+	r.POST(userLogin, auth.Controller.Login)
+	r.POST(userLogout, auth.Controller.Logout)
+	r.POST(newGame, game.Controller.CreateNewGame)
+	r.POST(newMovement, movement.Controller.PostMovement)
 
 	r.Run()
 }
