@@ -5,15 +5,10 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/negroni"
 	"log"
-	"minesweeper-API/app/memory"
 	"minesweeper-API/app/router"
 )
 
-var GameStore *memory.GameStore
-
 func Start() {
-	db := memory.New()
-	GameStore = memory.NewGameStore(db)
 	logrus.StandardLogger()
 	r := gin.Default()
 	router.InitRoutes(r)

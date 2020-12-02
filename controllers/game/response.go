@@ -1,4 +1,4 @@
-package server
+package game
 
 type Response struct {
 	Status  int32
