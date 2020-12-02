@@ -1,37 +1,31 @@
 package domain
 
 import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )
 
-type Games struct {
-	ID          primitive.ObjectID
-	UserUUID    string      `bson:"game_uuid"`
-	DateCreated time.Time   `bson:"date_created"`
-	UserID      string      `bson:"user_id"`
-	Finished    bool        `bson:"finished"`
-	Timer       *time.Timer `bson:"timer"`
-	Details     Details     `bson:"game_details"`
+type Cell struct {
+	Mine    bool `json:"mine"`
+	Clicked bool `json:"clicked"`
+	Flagged bool `json:"flagged"`
+	Value   int  `json:"value"`
 }
 
-type Details struct {
-	Board      *Board `bson:"board"`
-	Status     string `bson:"status"`
-	CountMoves int    `bson:"moves"`
+type CellGrid []Cell
+
+type Game struct {
+	Timer  *time.Timer `json:"timer"`
+	Name   string      `json:"name"`
+	Rows   int64       `json:"rows"`
+	Cols   int64       `json:"cols"`
+	Mines  int64       `json:"mines"`
+	Status string      `json:"status"`
+	Grid   []CellGrid  `json:"grid,omitempty"`
+	Clicks int64       `json:"-"`
+	Flags  int64       `json:"-"`
 }
 
-type Board struct {
-	Positions []Positions `bson:"positions"`
-	Actions   []*Actions  `bson:"actions"`
-}
-
-type Positions struct {
-	status string `bson:"positions"`
-	bombs  int    `bson:"int"`
-}
-
-type Actions struct {
-	PositionX int `bson:"position_x"`
-	PositionY int `bson:"position_y"`
+type ClickResult struct {
+	Cell Cell
+	Game Game
 }

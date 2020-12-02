@@ -20,34 +20,22 @@ minesweeper-API-server
 ### Backlog
 **Backend Requierements:**
   - Setup environment
-  - Generate connection with mongo client
+  - Generate connection with on memory api service
   - Generate ping controller
   - Push to heroku and validate working
-  - Generate a new rest api on go with a defautl router
-  - Define domain and add structs for account, user, game, current-game, cell, banner-status, session, actions
+  - Generate a new rest api on go with a default gin router
+  - Define domain and add structs for game, cell, banner-status, actions
   - Add game constants, start, over, cell flag, cell positions, status, etc.
   - Add mappings & controllers, map each request unmarshall json body by request domain defined: 
-    - POST: Create user. 
-    - POST: Update user. 
-    - POST: Get user. 
-    - POST: Login
-    - POST: Logout 
     - POST: Start new game - Time(minutes), weithht(column & rows) & (Difficulty || Number of mines)
     - POST: Pause game
     - POST: Resume game
     - POST: Abandon game
     - GET: Last Game Action
     - GET: Game Action History
-    - POST: Post new action movement
+    - POST: Post new click movement
     - GET: Game history details
   - Generate services:
-    - User Service
-      -> Create user
-      -> Update user
-      -> Get user
-    - Auth service
-      -> Login
-      -> Logout
     - Game service
       -> Generate a criteria value by params, validate some maximum dificult && dimensions
       -> Make the area
@@ -58,29 +46,23 @@ minesweeper-API-server
       -> End game validation for each position in status flagged, visited or revealed, if the difference between the number of bombs (not revealed) and the flag bombs safed is equals to the number of positions opens, win.
       -> End game by action validation exploit bomb
       -> Force endgame if timer is done
-    - Time tracking
       -> Add time tracking service with channels
-    - Action service
       -> Add movement x, y publish 
         -> Validation and exploit if bomb, end game
         -> Reveal hints if ok and reveal a random value area not visited next to the current visit, it should be just safe zone (WITHOUT bombs)
       -> Add flag movement x, y publish to ELUDE this position.
     - History service
   - Generate DAOS
-    - User
     - Game
-    - Action
-    - Session
     
 **Frontend - Client side - Pretended: flutter app with dart.**
   - Setup env
   - Setup rest providers with http calls
   - Setup routes & views
-  - Build a login & logout flutter view
   - Build home view, if have a current game resume option, else start game
   - Build game start options view
-  - Build board render view with maximum colums with some position object
-  - Build movements events on dashboard positions(onclick, dobleclick or rightclick for flag)
+  - Build board render view with maximum columns with some positions object
+  - Build movements events on dashboard positions(onclick, doble click or right click or a flag)
   - Build game history view just list by user.
   - Deploy onto github with hummingbird
   
