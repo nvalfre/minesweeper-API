@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
@@ -21,81 +22,80 @@ var gameStore = memory.NewGameStore(db)
 var Controller gameControllerInterface = &gameController{services.GameService{Store: gameStore}}
 
 type gameControllerInterface interface {
-	CreateNewGame(c *gin.Context)
-	StartGame(c *gin.Context)
+	StartNewGame(c *gin.Context)
 	ClickPosition(c *gin.Context)
 }
 type gameController struct {
 	GameService services.GameService
 }
 
-func (controller *gameController) CreateNewGame(c *gin.Context) {
+func (controller *gameController) StartNewGame(c *gin.Context) {
 	name := c.Query("name")
 	rows, _ := strconv.ParseInt(c.Query("rows"), 10, 64)
 	columns, _ := strconv.ParseInt(c.Query("columns"), 10, 64)
 	mines, _ := strconv.ParseInt(c.Query("mines"), 10, 64)
 
+	game, err := controller.buildNewGame(name, rows, columns, mines)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "create",
+			"method":  "StartNewGame",
+			"error":   err,
+		})
+		c.JSON(http.StatusBadRequest, Response{
+			Status:  http.StatusBadRequest,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	game, err = controller.GameService.StartGame(game)
+
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "start",
+			"method":  "StartNewGame",
+			"err":     err,
+			"message": "cannot start game",
+		})
+		c.JSON(http.StatusInternalServerError, Response{
+			Status:  http.StatusInternalServerError,
+			Message: game,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: game,
+	})
+	return
+}
+
+func (controller *gameController) buildNewGame(name string, rows, columns, mines int64) (*domain.Game, error) {
 	game := &domain.Game{
 		Timer:  time.NewTimer(defaultDurationTime),
 		Name:   name,
+		UUID:   fmt.Sprintf("%v", uuid.New()),
 		Rows:   rows,
 		Cols:   columns,
 		Mines:  mines,
+		Flags:  rows * columns,
 		Grid:   nil,
 		Clicks: defaultStartClick,
 	}
 	logrus.WithFields(logrus.Fields{
 		"file":    "game_controller",
 		"service": "create",
-		"method":  "CreateNewGame",
+		"method":  "StartNewGame",
 		"game":    game,
 	})
-	if err := controller.GameService.Create(game); err != nil {
-		logrus.Errorf("Error creating game %v", game)
-		c.JSON(http.StatusBadRequest, Response{
-			Status:  http.StatusBadRequest,
-			Message: &game,
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, Response{
-		Status:  http.StatusCreated,
-		Message: &game,
-	})
-}
-
-func (controller *gameController) StartGame(c *gin.Context) {
-	gameName := c.Query("name")
-	gameUUID := c.Query("uuid")
-	logrus.WithFields(logrus.Fields{
-		"file":      "game_controller",
-		"service":   "start",
-		"method":    "StartGame",
-		"game_name": gameName,
-		"game_uuid": gameUUID,
-	})
-
-	game, err := controller.GameService.Start(gameName)
-
+	err := controller.GameService.Create(game)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{
-			"file":    "game_controller",
-			"service": "start",
-			"method":  "StartGame",
-			"err":     err,
-			"message": "cannot start game",
-		})
-		c.JSON(http.StatusInternalServerError, Response{
-			Status:  http.StatusInternalServerError,
-			Message: &game,
-		})
-		return
+		return nil, err
 	}
-	c.JSON(http.StatusOK, Response{
-		Status:  http.StatusOK,
-		Message: &game,
-	})
+	return game, err
 }
 
 func (controller *gameController) ClickPosition(c *gin.Context) {

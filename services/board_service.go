@@ -15,7 +15,7 @@ func BuildBoard(game *domain.Game) {
 	cells := make(domain.CellGrid, numCells)
 
 	generateRandomPositions(game, numCells, cells)
-	setCellValues(game)
+	setCellAdjacentValues(game)
 }
 
 func generateRandomPositions(game *domain.Game, numCells int64, cells domain.CellGrid) {
@@ -31,11 +31,12 @@ func generateRandomPositions(game *domain.Game, numCells int64, cells domain.Cel
 	game.Grid = make([]domain.CellGrid, game.Rows)
 	for row := range game.Grid {
 		row64 := int64(row)
-		game.Grid[row] = cells[(game.Cols * row64):(game.Cols * (row64 + 1))]
+		cellGrid := cells[(game.Cols * row64):(game.Cols * (row64 + 1))]
+		game.Grid[row] = cellGrid
 	}
 }
 
-func setCellValues(game *domain.Game) {
+func setCellAdjacentValues(game *domain.Game) {
 	for i, row := range game.Grid {
 		for j, cell := range row {
 			if cell.Mine {

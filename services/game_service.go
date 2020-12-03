@@ -3,13 +3,14 @@ package services
 import (
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
 )
 
 const (
-	defaultRows  = 6
-	defaultCols  = 6
+	defaultRows  = 10
+	defaultCols  = 10
 	defaultMines = 12
 	maxRows      = 30
 	maxCols      = 30
@@ -21,8 +22,9 @@ const (
 
 type GameServiceInterface interface {
 	Create(game *domain.Game) error
+	StartGame(game *domain.Game) (*domain.Game, error)
 	Start(name string) (*domain.Game, error)
-	Click(name string, i, j int) (*domain.Game, error)
+	Click(name string, i, j int64, flag bool) (*domain.Game, error)
 }
 
 type GameService struct {
@@ -57,6 +59,19 @@ func (s *GameService) Create(game *domain.Game) error {
 
 	err := s.Store.Insert(game)
 	return err
+}
+
+func (s *GameService) StartGame(game *domain.Game) (*domain.Game, error) {
+	logrus.WithFields(logrus.Fields{
+		"file":      "game_controller",
+		"service":   "start",
+		"method":    "StartGame",
+		"game_name": game.Name,
+		"game_uuid": game.UUID,
+	})
+
+	game, err := s.Start(game.Name)
+	return game, err
 }
 
 func (s *GameService) Start(name string) (*domain.Game, error) {

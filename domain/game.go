@@ -14,8 +14,9 @@ type Cell struct {
 type CellGrid []Cell
 
 type Game struct {
-	Timer  *time.Timer `json:"timer"`
+	Timer  *time.Timer `json:"-"`
 	Name   string      `json:"name"`
+	UUID   string      `json:"uuid"`
 	Rows   int64       `json:"rows"`
 	Cols   int64       `json:"cols"`
 	Mines  int64       `json:"mines"`

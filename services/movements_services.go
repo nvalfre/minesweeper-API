@@ -36,5 +36,5 @@ func ClickCell(game *domain.Game, i, j int64, flag bool) error {
 }
 
 func isGameFinished(game *domain.Game) bool {
-	return game.Clicks == ((game.Rows * game.Cols) - game.Mines)
+	return (game.Clicks + game.Flags) == ((game.Rows * game.Cols) - game.Mines)
 }
