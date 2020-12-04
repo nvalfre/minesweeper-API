@@ -27,10 +27,10 @@ minesweeper-API-server
   - Define domain and add structs for game, cell, banner-status, actions
   - Add game constants, start, over, cell flag, cell positions, status, etc.
   - Add mappings & controllers, map each request unmarshall json body by request domain defined: 
-    - POST: Start new game - Time(minutes), weithht(column & rows) & (Difficulty || Number of mines)
+    - POST: Start new game - weithht(column & rows) & (Number of mines)
+    - POST: Restart current game game name
     - POST: Pause game
     - POST: Resume game
-    - POST: Abandon game
     - GET: Last Game Action
     - GET: Game Action History
     - POST: Post new click movement

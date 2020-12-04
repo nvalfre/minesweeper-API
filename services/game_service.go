@@ -22,6 +22,7 @@ const (
 
 type GameServiceInterface interface {
 	Create(game *domain.Game) error
+	History() (map[string]*domain.Game, error)
 	StartGame(game *domain.Game) (*domain.Game, error)
 	Start(name string) (*domain.Game, error)
 	Click(name string, pos *domain.CellPos) (*domain.Game, error)
@@ -71,6 +72,26 @@ func (s *GameService) Create(game *domain.Game) error {
 
 	err := s.Store.Insert(game)
 	return err
+}
+
+func (s *GameService) History() (map[string]*domain.Game, error) {
+	logrus.WithFields(logrus.Fields{
+		"file":    "game_controller",
+		"service": "history",
+		"method":  "GetHistory",
+	})
+	gameHistory, err := s.Store.GetAll()
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "history",
+			"method":  "GetHistory",
+			"err":     err,
+			"message": "cannot get game history",
+		})
+		return nil, err
+	}
+	return gameHistory, err
 }
 
 func (s *GameService) StartGame(game *domain.Game) (*domain.Game, error) {

@@ -9,6 +9,7 @@ import (
 type GameStoreInterface interface {
 	Insert(game *domain.Game) error
 	Update(game *domain.Game) error
+	GetAll() (map[string]*domain.Game, error)
 	GetByName(name string) (*domain.Game, error)
 	insertGrid(game *domain.Game) error
 	updateGrid(game *domain.Game) error
@@ -63,6 +64,10 @@ func (s *GameStore) GetByName(name string) (*domain.Game, error) {
 		return &g, nil
 	}
 	return nil, errors.New("game not found")
+}
+
+func (s *GameStore) GetAll() (map[string]*domain.Game, error) {
+	return s.db.games, nil
 }
 
 func (s *GameStore) insertGrid(game *domain.Game) error {

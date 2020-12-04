@@ -26,6 +26,7 @@ type gameControllerInterface interface {
 	PauseGame(c *gin.Context)
 	ResumeGame(c *gin.Context)
 	ClickPosition(c *gin.Context)
+	GetHistory(c *gin.Context)
 }
 type gameController struct {
 	GameService services.GameService
@@ -189,9 +190,6 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 	}
 	cell := game.Grid[cellPos.Row][cellPos.Col]
 
-	//if game.GameStatus.Alive {
-	//	game.Grid = nil
-	//}
 	clickResult := domain.ClickResult{
 		GameStatus: game.GameStatus,
 		Cell:       cell,
@@ -201,4 +199,20 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 		Status:  http.StatusOK,
 		Message: &clickResult,
 	})
+}
+
+func (controller *gameController) GetHistory(c *gin.Context) {
+	gameHistory, err := controller.GameService.History()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, Response{
+			Status:  http.StatusInternalServerError,
+			Message: fmt.Sprint("Can not get game history"),
+		})
+
+	}
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: &gameHistory,
+	})
+
 }
