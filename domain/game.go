@@ -38,9 +38,9 @@ type Game struct {
 }
 
 type ClickResult struct {
+	GameStatus game_status.GameStatus
 	Cell       Cell
 	Game       Game
-	GameStatus game_status.GameStatus
 }
 
 type CellPos struct {

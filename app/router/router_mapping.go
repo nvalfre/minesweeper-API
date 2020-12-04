@@ -8,10 +8,14 @@ import (
 
 const pingEndpoint = "/ping"
 const newGame = "/game"
+const pauseGame = "/game/pause"
+const resumeGame = "/game/resume"
 const newClickMovement = "/game/movement"
 
 func InitRoutes(r *gin.Engine) {
 	r.GET(pingEndpoint, ping.Ping())
 	r.POST(newGame, game.Controller.StartNewGame)
-	r.POST(newClickMovement, game.Controller.ClickPosition)
+	r.PUT(newClickMovement, game.Controller.ClickPosition)
+	r.PUT(pauseGame, game.Controller.PauseGame)
+	r.PUT(resumeGame, game.Controller.ResumeGame)
 }

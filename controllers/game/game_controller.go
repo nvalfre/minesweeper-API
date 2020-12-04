@@ -23,6 +23,8 @@ var Controller gameControllerInterface = &gameController{services.GameService{St
 
 type gameControllerInterface interface {
 	StartNewGame(c *gin.Context)
+	PauseGame(c *gin.Context)
+	ResumeGame(c *gin.Context)
 	ClickPosition(c *gin.Context)
 }
 type gameController struct {
@@ -69,6 +71,56 @@ func (controller *gameController) StartNewGame(c *gin.Context) {
 	c.JSON(http.StatusOK, Response{
 		Status:  http.StatusOK,
 		Message: game,
+	})
+	return
+}
+
+func (controller *gameController) PauseGame(c *gin.Context) {
+	name := c.Query("name")
+
+	game, err := controller.GameService.Pause(name)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "pause",
+			"method":  "PauseGame",
+			"error":   err,
+		})
+		c.JSON(http.StatusBadRequest, Response{
+			Status:  http.StatusBadRequest,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: game.GameStatus,
+	})
+	return
+}
+
+func (controller *gameController) ResumeGame(c *gin.Context) {
+	name := c.Query("name")
+
+	game, err := controller.GameService.Resume(name)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "resume",
+			"method":  "ResumeGame",
+			"error":   err,
+		})
+		c.JSON(http.StatusBadRequest, Response{
+			Status:  http.StatusBadRequest,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: game.GameStatus,
 	})
 	return
 }

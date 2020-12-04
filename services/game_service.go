@@ -24,7 +24,9 @@ type GameServiceInterface interface {
 	Create(game *domain.Game) error
 	StartGame(game *domain.Game) (*domain.Game, error)
 	Start(name string) (*domain.Game, error)
-	Click(name string, i, j int64, flag bool) (*domain.Game, error)
+	Click(name string, pos *domain.CellPos) (*domain.Game, error)
+	Pause(name string) (*domain.Game, error)
+	Resume(name string) (*domain.Game, error)
 }
 
 type GameService struct {
@@ -37,13 +39,13 @@ func (s *GameService) Create(game *domain.Game) error {
 		return errors.New("no Game name")
 	}
 
-	if game.Rows == 0 {
+	if game.Rows < 8 {
 		game.Rows = defaultRows
 	}
-	if game.Cols == 0 {
+	if game.Cols < 8 {
 		game.Cols = defaultCols
 	}
-	if game.Mines == 0 {
+	if game.Mines < 10 {
 		game.Mines = defaultMines
 	}
 
@@ -127,5 +129,31 @@ func (s *GameService) Click(name string, pos *domain.CellPos) (*domain.Game, err
 		return nil, err
 	}
 
+	return game, nil
+}
+
+func (s *GameService) Pause(name string) (*domain.Game, error) {
+	game, err := s.Store.GetByName(name)
+	if err != nil {
+		return nil, err
+	}
+
+	game.GameStatus.Status = game_status.Paused
+	if err := s.Store.Update(game); err != nil {
+		return nil, err
+	}
+	return game, nil
+}
+
+func (s *GameService) Resume(name string) (*domain.Game, error) {
+	game, err := s.Store.GetByName(name)
+	if err != nil {
+		return nil, err
+	}
+
+	game.GameStatus.Status = game_status.Started
+	if err := s.Store.Update(game); err != nil {
+		return nil, err
+	}
 	return game, nil
 }
