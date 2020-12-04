@@ -9,6 +9,7 @@ import (
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
 	"minesweeper-API/services"
+	"minesweeper-API/utils"
 	"net/http"
 	"strconv"
 	"time"
@@ -34,6 +35,7 @@ type gameController struct {
 }
 
 func (controller *gameController) StartNewGame(c *gin.Context) {
+	utils.BuildHeaders(c)
 	name := c.Query("name")
 	rows, _ := strconv.ParseInt(c.Query("rows"), 10, 64)
 	columns, _ := strconv.ParseInt(c.Query("columns"), 10, 64)
@@ -76,8 +78,8 @@ func (controller *gameController) StartNewGame(c *gin.Context) {
 	})
 	return
 }
-
 func (controller *gameController) PauseGame(c *gin.Context) {
+	utils.BuildHeaders(c)
 	name := c.Query("name")
 
 	game, err := controller.GameService.Pause(name)
@@ -152,6 +154,7 @@ func (controller *gameController) buildNewGame(name string, rows, columns, mines
 }
 
 func (controller *gameController) ClickPosition(c *gin.Context) {
+	utils.BuildHeaders(c)
 	var cellPos domain.CellPos
 	gameName := c.Query("name")
 	gameUUID := c.Query("uuid")
@@ -203,6 +206,7 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 }
 
 func (controller *gameController) FlagClickPosition(c *gin.Context) {
+	utils.BuildHeaders(c)
 	var cellPos domain.CellPos
 	gameName := c.Query("name")
 	gameUUID := c.Query("uuid")
@@ -254,6 +258,7 @@ func (controller *gameController) FlagClickPosition(c *gin.Context) {
 }
 
 func (controller *gameController) GetHistory(c *gin.Context) {
+	utils.BuildHeaders(c)
 	gameHistory, err := controller.GameService.History()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, Response{
