@@ -4,6 +4,7 @@ import (
 	"errors"
 	"minesweeper-API/domain"
 	"minesweeper-API/domain/game_status"
+	"minesweeper-API/utils"
 )
 
 const invalidColumn = -1
@@ -18,32 +19,31 @@ type MovementService struct {
 }
 
 func (s *MovementService) ClickCell() error {
+	pos := s.getCurrentPos()
 	s.game.Clicks++
-	s.getCurrentPos().Clicked = true
-	if s.getCurrentPos().Covered {
+	pos.Clicked = true
+	if pos.Covered {
 		return errors.New("cell already clicked and covered")
 	}
-	if s.getCurrentPos().Opened {
+	if pos.Opened {
 		return errors.New("cell already open and free covered")
 	}
 	if s.pos.Flag {
-		if s.getCurrentPos().Flagged {
+		if pos.Flagged {
 			s.game.Flags -= 1
-			s.getCurrentPos().Flagged = false
+			pos.Flagged = false
 			return nil
 		}
 		s.game.Flags += 1
-		s.getCurrentPos().Flagged = true
+		pos.Flagged = true
 		return nil
 	}
-	if s.getCurrentPos().Mine {
+	if pos.Mine {
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Lose
 		return nil
 	}
-	s.getCurrentPos().Covered = true
-	s.game.CoveredCells++
-	s.open(invalidColumn, invalidColumn)
+	s.open(pos.Column, pos.Row)
 	if s.isGameFinished() {
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Won
@@ -56,57 +56,40 @@ func (s *MovementService) getCurrentPos() *domain.Cell {
 	return &s.game.Grid[s.pos.Col][s.pos.Row]
 }
 
-func (s *MovementService) open(column, row int) {
-	if !s.isValidPosition(s.getCurrentPos().Column, s.getCurrentPos().Row) {
-		return
-	}
-	if s.getCurrentPos().Opened {
-		return
-	}
-	s.game.OpenCells++
-	s.getCurrentPos().Opened = true
-
-	if s.mineCount() > 0 {
-		return
-	}
-	if column > invalidColumn && row > invalidColumn {
-		s.open(column-1, row)
-		s.open(column+1, row)
-
-		s.open(column, row-1)
-		s.open(column, row+1)
-
-		s.open(column-1, row-1)
-		s.open(column+1, row+1)
-		s.open(column+1, row-1)
-		s.open(column-1, row+1)
-	}
+func (s *MovementService) getPos(column, row int64) *domain.Cell {
+	return &s.game.Grid[column][row]
 }
 
-func (s *MovementService) mineCount() int {
-	s.isBomb(s.getCurrentPos().Column-1, s.getCurrentPos().Row)
-	s.isBomb(s.getCurrentPos().Column+1, s.getCurrentPos().Row)
-
-	s.isBomb(s.getCurrentPos().Column, s.getCurrentPos().Row-1)
-	s.isBomb(s.getCurrentPos().Column, s.getCurrentPos().Row+1)
-
-	s.isBomb(s.getCurrentPos().Column-1, s.getCurrentPos().Row-1)
-	s.isBomb(s.getCurrentPos().Column+1, s.getCurrentPos().Row+1)
-	s.isBomb(s.getCurrentPos().Column+1, s.getCurrentPos().Row-1)
-	s.isBomb(s.getCurrentPos().Column-1, s.getCurrentPos().Row+1)
-	return s.getCurrentPos().AdjacentBombs
-}
-
-func (s *MovementService) isBomb(column, row int64) {
-	isValidPositionInGrid := s.isValidPosition(column, row)
-	grid := *s.grid
-	if isValidPositionInGrid && grid[column][row].Mine {
-		s.getCurrentPos().AdjacentBombs++
+func (s *MovementService) open(column, row int64) {
+	if !utils.IsValidPosition(s.game, column, row) {
+		return
 	}
-}
+	pos := s.getPos(column, row)
+	if pos.Covered || pos.Opened {
+		return
+	}
+	if s.isCurrentPosition(column, row) {
+		pos.Covered = true
+		s.game.CoveredCells++
+	} else {
+		pos.Opened = true
+		s.game.OpenCells++
+	}
 
-func (s *MovementService) isValidPosition(x, y int64) bool {
-	return x >= 0 && x < s.game.Cols && y >= 0 && y < s.game.Rows
+	if mineCount := utils.MineCount(s.game, *s.grid, s.getCurrentPos()); mineCount > 0 {
+		s.getCurrentPos().AdjacentBombs = mineCount
+		return
+	}
+	s.open(column-1, row)
+	s.open(column+1, row)
+
+	s.open(column, row-1)
+	s.open(column, row+1)
+
+	s.open(column-1, row-1)
+	s.open(column+1, row+1)
+	s.open(column+1, row-1)
+	s.open(column-1, row+1)
 }
 
 func (s *MovementService) isGameFinished() bool {
@@ -119,4 +102,8 @@ func (s *MovementService) isGameFinished() bool {
 	r1 := playedWellDiff == s.game.Mines
 	r2 := cellsWithoutMines == totalPlayed
 	return r1 || r2
+}
+
+func (s *MovementService) isCurrentPosition(column, row int64) bool {
+	return column == s.pos.Col && row == s.pos.Row
 }
