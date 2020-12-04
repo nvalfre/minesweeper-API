@@ -16,7 +16,2403 @@ minesweeper-API-server
     Ability to start a new game and preserve/resume the old ones
     Ability to select the game parameters: number of rows, columns, and mines
     Ability to support multiple users/accounts
-    
+### Usage
+####Endpoints Example
+#####- Create game 3x3x1 transforms => 8x8x10
+`	
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/game/new?rows=3&columns=3&mines=1&name=myTestGame",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"game",
+						"new"
+					],
+					"query": [
+						{
+							"key": "rows",
+							"value": "3"
+						},
+						{
+							"key": "columns",
+							"value": "3"
+						},
+						{
+							"key": "mines",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "myTestGame"
+						}
+					]
+				}
+			},
+			"response":{
+                           "Status": 200,
+                           "Message": {
+                               "name": "myTestGame2",
+                               "uuid": "cb5e4288-8038-4fbd-9fce-933a7b770430",
+                               "rows": 8,
+                               "cols": 8,
+                               "mines": 10,
+                               "grid": [
+                                   [
+                                       {
+                                           "column": 0,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 0,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 1,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 1,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 2,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 2,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 3,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 3,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 4,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 4,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 5,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 5,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 6,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 6,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ],
+                                   [
+                                       {
+                                           "column": 7,
+                                           "row": 0,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": true,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 1,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 2,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 3,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 4,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 5,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 6,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       },
+                                       {
+                                           "column": 7,
+                                           "row": 7,
+                                           "value": 0,
+                                           "adjacent_bombs": 0,
+                                           "mine": false,
+                                           "clicked": false,
+                                           "flagged": false,
+                                           "opened": false,
+                                           "covered": false
+                                       }
+                                   ]
+                               ],
+                               "clicks": 0,
+                               "flags": 0,
+                               "open_cells": 0,
+                               "covered_cells": 0
+                           }
+                       }
+		},`
+		
+##### Click position
+
+			`"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"column\": 0,\r\n    \"row\": 1,\r\n    \"flag\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/game/movement?name=myTestGame2&uuid=a57340e4-28bb-40c8-9897-3d0b2fe397a7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"game",
+						"movement"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myTestGame"
+						},
+						{
+							"key": "uuid",
+							"value": "a57340e4-28bb-40c8-9897-3d0b2fe397a7"
+						}
+					]
+				}
+			},
+			"response": [{
+                             "Status": 200,
+                             "Message": {
+                                 "GameStatus": {
+                                     "alive": true,
+                                     "status": "Game in progress",
+                                     "won": ""
+                                 },
+                                 "Cell": {
+                                     "column": 1,
+                                     "row": 0,
+                                     "value": 0,
+                                     "adjacent_bombs": 0,
+                                     "mine": true,
+                                     "clicked": false,
+                                     "flagged": false,
+                                     "opened": false,
+                                     "covered": false
+                                 },
+                                 "Game": {
+                                     "name": "myTestGame2",
+                                     "uuid": "959de865-1304-4558-a310-a4a67ae92b2b",
+                                     "rows": 8,
+                                     "cols": 8,
+                                     "mines": 10,
+                                     "grid": [
+                                         [
+                                             {
+                                                 "column": 0,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 1,
+                                                 "mine": false,
+                                                 "clicked": true,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": true
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 1,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 2,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 3,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 4,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 5,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 6,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 7,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ]
+                                     ],
+                                     "clicks": 1,
+                                     "flags": 0,
+                                     "open_cells": 0,
+                                     "covered_cells": 1
+                                 }
+                             }
+                         },
+                         {
+                             "Status": 200,
+                             "Message": {
+                                 "GameStatus": {
+                                     "alive": false,
+                                     "status": "Game finished!",
+                                     "won": "You lose!"
+                                 },
+                                 "Cell": {
+                                     "column": 1,
+                                     "row": 0,
+                                     "value": 0,
+                                     "adjacent_bombs": 0,
+                                     "mine": false,
+                                     "clicked": false,
+                                     "flagged": false,
+                                     "opened": false,
+                                     "covered": false
+                                 },
+                                 "Game": {
+                                     "name": "myTestGame2",
+                                     "uuid": "fe02cd48-0962-40cb-b8e4-1300d00b6905",
+                                     "rows": 8,
+                                     "cols": 8,
+                                     "mines": 10,
+                                     "grid": [
+                                         [
+                                             {
+                                                 "column": 0,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": true,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 0,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 1,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 1,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 2,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 2,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 3,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 3,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 4,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 4,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 5,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 5,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 6,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 6,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ],
+                                         [
+                                             {
+                                                 "column": 7,
+                                                 "row": 0,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 1,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 2,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 3,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 4,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 5,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 6,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": false,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             },
+                                             {
+                                                 "column": 7,
+                                                 "row": 7,
+                                                 "value": 0,
+                                                 "adjacent_bombs": 0,
+                                                 "mine": true,
+                                                 "clicked": false,
+                                                 "flagged": false,
+                                                 "opened": false,
+                                                 "covered": false
+                                             }
+                                         ]
+                                     ],
+                                     "clicks": 1,
+                                     "flags": 0,
+                                     "open_cells": 0,
+                                     "covered_cells": 0
+                                 }
+                             }
+                         },
+                         {
+                             "Status": 500,
+                             "Message": "Game Name: 0xc0002b9830, UUID: 0xc0002b9860, Error: game not found"
+                         }]`
+		
+		{
+			"name": "Pause game",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/game/pause?name=myTestGame",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"game",
+						"pause"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myTestGame"
+						}
+					]
+				}
+			},
+			"response": [{
+                                                      "Status": 200,
+                                                      "Message": {
+                                                          "alive": false,
+                                                          "status": "Game paused.",
+                                                          "won": "You lose!"
+                                                      }
+                                                  },
+                                                  {
+                                                      "Status": 400,
+                                                      "Message": "game not found"
+                                                  }]
+		},
+		{
+			"name": "Resume game",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/game/resume?name=myTestGame",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"game",
+						"resume"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myTestGame"
+						}
+					]
+				}
+			},
+			"response": [
+                         {
+                             "Status": 400,
+                             "Message": "game not found"
+                         },{
+                              "Status": 200,
+                              "Message": {
+                                  "alive": false,
+                                  "status": "Game in progress",
+                                  "won": "You lose!"
+                              }
+                          }]
+		}
+}
 ### Backlog
 **Backend Requierements:**
   - Setup environment
