@@ -65,9 +65,10 @@ func (s *MovementService) open(column, row int64) {
 		return
 	}
 	pos := s.getPos(column, row)
-	if pos.Covered || pos.Opened {
+	if pos.Covered || pos.Opened || pos.Mine {
 		return
 	}
+
 	if s.isCurrentPosition(column, row) {
 		pos.Covered = true
 		s.game.CoveredCells++
