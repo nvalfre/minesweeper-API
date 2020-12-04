@@ -7,7 +7,6 @@ import (
 	"github.com/urfave/negroni"
 	"log"
 	"minesweeper-API/app/router"
-	"time"
 )
 
 func Start() {
@@ -19,17 +18,9 @@ func Start() {
 	n.UseHandler(r)
 	r.HandleMethodNotAllowed = true
 	r.RedirectTrailingSlash = false
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://github.com"
-		},
-		MaxAge: 12 * time.Hour,
-	}))
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://google.com"}
+	r.Use(cors.New(config))
 	log.Print("Server running on port :3000")
 	r.Run()
 }
