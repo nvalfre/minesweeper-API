@@ -19,7 +19,7 @@ func Start() {
 	r.HandleMethodNotAllowed = true
 	r.RedirectTrailingSlash = false
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://google.com"}
+	config.AllowOrigins = []string{"*"}
 	r.Use(cors.New(config))
 	log.Print("Server running on port :3000")
 	r.Run()
