@@ -1,23 +1,23 @@
 package services
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
+	"minesweeper-API/domain/game_status"
 )
 
 const (
-	defaultRows  = 10
-	defaultCols  = 10
-	defaultMines = 12
+	defaultCols  = 8
+	defaultRows  = 8
+	defaultMines = 10
+	maxCols      = 16
 	maxRows      = 30
-	maxCols      = 30
-
-	gameCreatedStatus  = "Created"
-	gameStartedStatus  = "Started"
-	gameFinishedStatus = "Finished"
+	minMines     = 10
+	maxMines     = 99
 )
 
 type GameServiceInterface interface {
@@ -28,7 +28,8 @@ type GameServiceInterface interface {
 }
 
 type GameService struct {
-	Store memory.GameStoreInterface
+	Store           memory.GameStoreInterface
+	MovementService MovementService
 }
 
 func (s *GameService) Create(game *domain.Game) error {
@@ -52,10 +53,18 @@ func (s *GameService) Create(game *domain.Game) error {
 	if game.Cols > maxCols {
 		game.Cols = maxCols
 	}
-	if game.Mines > (game.Cols * game.Rows) {
-		game.Mines = (game.Cols * game.Rows)
+
+	if game.Mines > maxMines {
+		game.Mines = maxMines
 	}
-	game.Status = gameCreatedStatus
+
+	if game.Mines < minMines {
+		game.Mines = minMines
+	}
+
+	game.GameStatus = game_status.GameStatus{
+		Status: game_status.WaitingForStart,
+	}
 
 	err := s.Store.Insert(game)
 	return err
@@ -82,22 +91,34 @@ func (s *GameService) Start(name string) (*domain.Game, error) {
 
 	BuildBoard(game)
 
-	game.Status = gameStartedStatus
+	game.GameStatus.Status = game_status.Started
 
 	err = s.Store.Update(game)
-	fmt.Printf("GameGrid: %v", game.Grid)
-	game.Grid = nil
+
+	grid, _ := json.Marshal(game.Grid)
+	fmt.Printf("GameGrid: %s", string(grid))
 
 	return game, err
 }
 
-func (s *GameService) Click(name string, i, j int64, flag bool) (*domain.Game, error) {
+func (s *GameService) Click(name string, pos *domain.CellPos) (*domain.Game, error) {
 	game, err := s.Store.GetByName(name)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := ClickCell(game, i, j, flag); err != nil {
+	grid, err := s.Store.GetByNameGrid(name)
+	game.Grid = *grid
+	if err != nil {
+		return nil, errors.New("cannot get grid on click")
+
+	}
+	s.MovementService = MovementService{
+		game: game,
+		grid: grid,
+		pos:  pos,
+	}
+	if err := s.MovementService.ClickCell(); err != nil {
 		return nil, err
 	}
 

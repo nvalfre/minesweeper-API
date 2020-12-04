@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
+	"minesweeper-API/domain/game_status"
 	"minesweeper-API/services"
 	"net/http"
 	"strconv"
@@ -81,7 +82,6 @@ func (controller *gameController) buildNewGame(name string, rows, columns, mines
 		Rows:   rows,
 		Cols:   columns,
 		Mines:  mines,
-		Flags:  rows * columns,
 		Grid:   nil,
 		Clicks: defaultStartClick,
 	}
@@ -99,11 +99,7 @@ func (controller *gameController) buildNewGame(name string, rows, columns, mines
 }
 
 func (controller *gameController) ClickPosition(c *gin.Context) {
-	var CellPos struct {
-		Row  int64
-		Col  int64
-		Flag bool
-	}
+	var cellPos domain.CellPos
 	gameName := c.Query("name")
 	gameUUID := c.Query("uuid")
 
@@ -115,7 +111,7 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 		"game_uuid": gameUUID,
 	})
 
-	if err := json.NewDecoder(c.Request.Body).Decode(&CellPos); err != nil {
+	if err := json.NewDecoder(c.Request.Body).Decode(&cellPos); err != nil {
 		logrus.Error(err)
 		c.JSON(http.StatusBadRequest, Response{
 			Status:  http.StatusBadRequest,
@@ -124,7 +120,7 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 		return
 	}
 
-	game, err := controller.GameService.Click(gameName, CellPos.Row, CellPos.Col, CellPos.Flag)
+	game, err := controller.GameService.Click(gameName, &cellPos)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
 			"file":    "game_controller",
@@ -140,9 +136,9 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 		})
 		return
 	}
-	cell := game.Grid[CellPos.Row][CellPos.Col]
+	cell := game.Grid[cellPos.Row][cellPos.Col]
 
-	if game.Status != "over" && game.Status != "won" {
+	if game.GameStatus.Status != game_status.Finished {
 		game.Grid = nil
 	}
 	clickResult := domain.ClickResult{

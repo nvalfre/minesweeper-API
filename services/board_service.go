@@ -15,7 +15,7 @@ func BuildBoard(game *domain.Game) {
 	cells := make(domain.CellGrid, numCells)
 
 	generateRandomPositions(game, numCells, cells)
-	setCellAdjacentValues(game)
+	setCellValues(game)
 }
 
 func generateRandomPositions(game *domain.Game, numCells int64, cells domain.CellGrid) {
@@ -36,30 +36,32 @@ func generateRandomPositions(game *domain.Game, numCells int64, cells domain.Cel
 	}
 }
 
-func setCellAdjacentValues(game *domain.Game) {
-	for i, row := range game.Grid {
-		for j, cell := range row {
+func setCellValues(game *domain.Game) {
+	for i, column := range game.Grid {
+		for j, cell := range column {
+			game.Grid[i][j].Column = int64(i)
+			game.Grid[i][j].Row = int64(j)
 			if cell.Mine {
-				setAdjacentValues(game, i, j)
+				setAdjacentValues(game, cell)
 			}
 		}
 	}
 }
 
-func setAdjacentValues(game *domain.Game, i, j int) {
-	for z := i - 1; z < i+2; z++ {
+func setAdjacentValues(game *domain.Game, cell domain.Cell) {
+	for z := cell.Row - 1; z < cell.Row+2; z++ {
 		if z < 0 || int64(z) > game.Rows-1 {
 			continue
 		}
-		for w := j - 1; w < j+2; w++ {
+		for w := cell.Column - 1; w < cell.Column+2; w++ {
 
 			if w < 0 || int64(w) > game.Cols-1 {
 				continue
 			}
-			if z == i && w == j {
+			if z == cell.Row && w == cell.Column {
 				continue
 			}
-			game.Grid[z][w].Value++
+			game.Grid[z][w].StartingAdjacentBombs++
 		}
 	}
 }
