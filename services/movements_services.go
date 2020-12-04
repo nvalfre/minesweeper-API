@@ -7,44 +7,39 @@ import (
 	"minesweeper-API/utils"
 )
 
-const invalidColumn = -1
+const maxPorcentageOfBoardOpened = 0.3
+const base = 10
+const initCount = 0
 
 type MovementServiceInterface interface {
 	ClickCell() error
+	FlagClickCell() error
 }
 type MovementService struct {
-	game *domain.Game
-	grid *[]domain.CellGrid
-	pos  *domain.CellPos
+	game                *domain.Game
+	grid                *[]domain.CellGrid
+	clickPosition       *domain.CellPos
+	clickOpenCellsCount int64
 }
 
 func (s *MovementService) ClickCell() error {
-	pos := s.getCurrentPos()
+	pos, err := s.getClickPosition()
+	if err != nil {
+		return err
+	}
+	if pos.Flagged {
+		return errors.New("cell already flagged")
+	}
 	s.game.Clicks++
 	pos.Clicked = true
-	if pos.Covered {
-		return errors.New("cell already clicked and covered")
-	}
-	if pos.Opened {
-		return errors.New("cell already open and free covered")
-	}
-	if s.pos.Flag {
-		if pos.Flagged {
-			s.game.Flags -= 1
-			pos.Flagged = false
-			return nil
-		}
-		s.game.Flags += 1
-		pos.Flagged = true
-		return nil
-	}
 	if pos.Mine {
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Lose
 		s.game.GameStatus.Alive = false
 		return nil
 	}
-	s.open(pos.Column, pos.Row)
+	s.clickOpenCellsCount = initCount
+	s.openAdjacent(pos.Column, pos.Row)
 	if s.isGameFinished() {
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Won
@@ -53,45 +48,85 @@ func (s *MovementService) ClickCell() error {
 	return nil
 }
 
-func (s *MovementService) getCurrentPos() *domain.Cell {
-	return &s.game.Grid[s.pos.Col][s.pos.Row]
+func (s *MovementService) FlagClickCell() error {
+	pos, err := s.getClickPosition()
+	if err != nil {
+		return err
+	}
+
+	if s.clickPosition.Flag {
+		if pos.Flagged {
+			s.game.Flags--
+			pos.Flagged = false
+			return nil
+		}
+		s.game.Flags++
+		pos.Flagged = true
+		return nil
+	}
+	if pos.Flagged {
+		return errors.New("cell already flagged")
+	}
+	return errors.New("internal error")
 }
 
-func (s *MovementService) getPos(column, row int64) *domain.Cell {
+func (s *MovementService) getClickPosition() (*domain.Cell, error) {
+	if !utils.IsValidPosition(s.game, s.clickPosition.Row, s.clickPosition.Col) {
+		return nil, errors.New("invalid position click")
+	}
+	pos := s.getCurrentPos()
+	if pos.Covered {
+		return nil, errors.New("cell already clicked and covered")
+	}
+	if pos.Opened {
+		return nil, errors.New("cell already openAdjacent and free covered")
+	}
+	return pos, nil
+}
+
+func (s *MovementService) getCurrentPos() *domain.Cell {
+	return &s.game.Grid[s.clickPosition.Row][s.clickPosition.Col]
+}
+
+func (s *MovementService) getPositionOffset(column, row int64) *domain.Cell {
 	return &s.game.Grid[column][row]
 }
 
-func (s *MovementService) open(column, row int64) {
-	if !utils.IsValidPosition(s.game, column, row) {
-		return
-	}
-	pos := s.getPos(column, row)
-	if pos.Covered || pos.Opened || pos.Mine {
+func (s *MovementService) openAdjacent(column, row int64) {
+	if maximum := (s.game.Rows * s.game.Cols) / (maxPorcentageOfBoardOpened * base); s.clickOpenCellsCount == maximum {
 		return
 	}
 
+	if !utils.IsValidPosition(s.game, column, row) {
+		return
+	}
+	pos := s.getPositionOffset(column, row)
+	if pos.Covered || pos.Opened || pos.Mine {
+		return
+	}
 	if s.isCurrentPosition(column, row) {
 		pos.Covered = true
 		s.game.CoveredCells++
 	} else {
 		pos.Opened = true
 		s.game.OpenCells++
+		s.clickOpenCellsCount++
 	}
 
 	if mineCount := utils.MineCount(s.game, *s.grid, s.getCurrentPos()); mineCount > 0 {
 		s.getCurrentPos().AdjacentBombs = mineCount
 		return
 	}
-	s.open(column-1, row)
-	s.open(column+1, row)
+	s.openAdjacent(column-1, row)
+	s.openAdjacent(column+1, row)
 
-	s.open(column, row-1)
-	s.open(column, row+1)
+	s.openAdjacent(column, row-1)
+	s.openAdjacent(column, row+1)
 
-	s.open(column-1, row-1)
-	s.open(column+1, row+1)
-	s.open(column+1, row-1)
-	s.open(column-1, row+1)
+	s.openAdjacent(column-1, row-1)
+	s.openAdjacent(column+1, row+1)
+	s.openAdjacent(column+1, row-1)
+	s.openAdjacent(column-1, row+1)
 }
 
 func (s *MovementService) isGameFinished() bool {
@@ -107,5 +142,5 @@ func (s *MovementService) isGameFinished() bool {
 }
 
 func (s *MovementService) isCurrentPosition(column, row int64) bool {
-	return column == s.pos.Col && row == s.pos.Row
+	return column == s.clickPosition.Col && row == s.clickPosition.Row
 }

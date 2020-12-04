@@ -26,6 +26,7 @@ type gameControllerInterface interface {
 	PauseGame(c *gin.Context)
 	ResumeGame(c *gin.Context)
 	ClickPosition(c *gin.Context)
+	FlagClickPosition(c *gin.Context)
 	GetHistory(c *gin.Context)
 }
 type gameController struct {
@@ -167,7 +168,7 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 		logrus.Error(err)
 		c.JSON(http.StatusBadRequest, Response{
 			Status:  http.StatusBadRequest,
-			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", &gameName, &gameUUID, err),
+			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", gameName, gameUUID, err),
 		})
 		return
 	}
@@ -184,7 +185,7 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 
 		c.JSON(http.StatusInternalServerError, Response{
 			Status:  http.StatusInternalServerError,
-			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", &gameName, &gameUUID, err),
+			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", gameName, gameUUID, err),
 		})
 		return
 	}
@@ -198,6 +199,57 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 	c.JSON(http.StatusOK, Response{
 		Status:  http.StatusOK,
 		Message: &clickResult,
+	})
+}
+
+func (controller *gameController) FlagClickPosition(c *gin.Context) {
+	var cellPos domain.CellPos
+	gameName := c.Query("name")
+	gameUUID := c.Query("uuid")
+
+	logrus.WithFields(logrus.Fields{
+		"file":      "game_controller",
+		"service":   "flag_click",
+		"method":    "FlagClickPosition",
+		"game_name": gameName,
+		"game_uuid": gameUUID,
+	})
+
+	if err := json.NewDecoder(c.Request.Body).Decode(&cellPos); err != nil {
+		logrus.Error(err)
+		c.JSON(http.StatusBadRequest, Response{
+			Status:  http.StatusBadRequest,
+			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", gameName, gameUUID, err),
+		})
+		return
+	}
+
+	game, err := controller.GameService.FlagClick(gameName, &cellPos)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"file":    "game_controller",
+			"service": "click",
+			"method":  "FlagClickPosition",
+			"err":     err,
+			"message": "cannot flag cell",
+		})
+
+		c.JSON(http.StatusInternalServerError, Response{
+			Status:  http.StatusInternalServerError,
+			Message: fmt.Sprintf("Game Name: %v, UUID: %v, Error: %v", gameName, gameUUID, err),
+		})
+		return
+	}
+	cell := game.Grid[cellPos.Row][cellPos.Col]
+
+	flagClickResult := domain.ClickResult{
+		GameStatus: game.GameStatus,
+		Cell:       cell,
+		Game:       *game,
+	}
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: &flagClickResult,
 	})
 }
 

@@ -17,14 +17,14 @@ func MineCount(game *domain.Game, grid []domain.CellGrid, pos *domain.Cell) int 
 	return count
 }
 
-func isBomb(game *domain.Game, grid []domain.CellGrid, column, row int64) int {
-	isValidPositionInGrid := IsValidPosition(game, column, row)
-	if isValidPositionInGrid && grid[column][row].Mine {
+func isBomb(game *domain.Game, grid []domain.CellGrid, row, column int64) int {
+	isValidPositionInGrid := IsValidPosition(game, row, column)
+	if isValidPositionInGrid && grid[row][column].Mine {
 		return 1
 	}
 	return 0
 }
 
-func IsValidPosition(game *domain.Game, x, y int64) bool {
-	return x >= 0 && x < game.Cols && y >= 0 && y < game.Rows
+func IsValidPosition(game *domain.Game, row, column int64) bool {
+	return row >= 0 && row < game.Rows && column >= 0 && column < game.Cols
 }

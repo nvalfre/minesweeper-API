@@ -12,12 +12,14 @@ const gameHistory = "/game/game_history"
 const pauseGame = "/game/pause"
 const resumeGame = "/game/resume"
 const newClickMovement = "/game/movement"
+const flagNewClickMovement = "/game/movement/flag"
 
 func InitRoutes(r *gin.Engine) {
 	r.GET(pingEndpoint, ping.Ping())
 	r.POST(newGame, game.Controller.StartNewGame)
 	r.GET(gameHistory, game.Controller.GetHistory)
 	r.PUT(newClickMovement, game.Controller.ClickPosition)
+	r.PUT(flagNewClickMovement, game.Controller.FlagClickPosition)
 	r.PUT(pauseGame, game.Controller.PauseGame)
 	r.PUT(resumeGame, game.Controller.ResumeGame)
 }

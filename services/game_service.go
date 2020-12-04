@@ -26,6 +26,7 @@ type GameServiceInterface interface {
 	StartGame(game *domain.Game) (*domain.Game, error)
 	Start(name string) (*domain.Game, error)
 	Click(name string, pos *domain.CellPos) (*domain.Game, error)
+	FlagClick(name string, pos *domain.CellPos) (*domain.Game, error)
 	Pause(name string) (*domain.Game, error)
 	Resume(name string) (*domain.Game, error)
 }
@@ -40,13 +41,13 @@ func (s *GameService) Create(game *domain.Game) error {
 		return errors.New("no Game name")
 	}
 
-	if game.Rows < 8 {
+	if game.Rows < defaultRows {
 		game.Rows = defaultRows
 	}
-	if game.Cols < 8 {
+	if game.Cols < defaultCols {
 		game.Cols = defaultCols
 	}
-	if game.Mines < 10 {
+	if game.Mines < defaultMines {
 		game.Mines = defaultMines
 	}
 
@@ -138,11 +139,42 @@ func (s *GameService) Click(name string, pos *domain.CellPos) (*domain.Game, err
 
 	}
 	s.MovementService = MovementService{
-		game: game,
-		grid: grid,
-		pos:  pos,
+		game:          game,
+		grid:          grid,
+		clickPosition: pos,
 	}
 	if err := s.MovementService.ClickCell(); err != nil {
+		return nil, err
+	}
+
+	if err := s.Store.Update(game); err != nil {
+		return nil, err
+	}
+
+	return game, nil
+}
+
+func (s *GameService) FlagClick(name string, pos *domain.CellPos) (*domain.Game, error) {
+	if !pos.Flag {
+		return nil, errors.New("request should be flagged")
+	}
+	game, err := s.Store.GetByName(name)
+	if err != nil {
+		return nil, err
+	}
+
+	grid, err := s.Store.GetByNameGrid(name)
+	game.Grid = *grid
+	if err != nil {
+		return nil, errors.New("cannot get grid on click")
+
+	}
+	s.MovementService = MovementService{
+		game:          game,
+		grid:          grid,
+		clickPosition: pos,
+	}
+	if err := s.MovementService.FlagClickCell(); err != nil {
 		return nil, err
 	}
 

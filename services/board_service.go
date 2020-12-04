@@ -37,10 +37,10 @@ func generateRandomPositions(game *domain.Game, numCells int64, cells domain.Cel
 }
 
 func setCellValues(game *domain.Game) {
-	for i, column := range game.Grid {
-		for j, _ := range column {
-			game.Grid[i][j].Column = int64(i)
-			game.Grid[i][j].Row = int64(j)
+	for i, row := range game.Grid {
+		for j, _ := range row {
+			game.Grid[i][j].Column = int64(j)
+			game.Grid[i][j].Row = int64(i)
 		}
 	}
 }
