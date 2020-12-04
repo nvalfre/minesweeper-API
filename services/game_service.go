@@ -63,6 +63,7 @@ func (s *GameService) Create(game *domain.Game) error {
 	}
 
 	game.GameStatus = game_status.GameStatus{
+		Alive:  true,
 		Status: game_status.WaitingForStart,
 	}
 

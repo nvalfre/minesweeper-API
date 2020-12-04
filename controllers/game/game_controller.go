@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
 	"minesweeper-API/domain"
-	"minesweeper-API/domain/game_status"
 	"minesweeper-API/services"
 	"net/http"
 	"strconv"
@@ -138,11 +137,13 @@ func (controller *gameController) ClickPosition(c *gin.Context) {
 	}
 	cell := game.Grid[cellPos.Row][cellPos.Col]
 
-	if game.GameStatus.Status != game_status.Finished {
-		game.Grid = nil
-	}
+	//if game.GameStatus.Alive {
+	//	game.Grid = nil
+	//}
 	clickResult := domain.ClickResult{
-		Cell: cell, Game: *game,
+		GameStatus: game.GameStatus,
+		Cell:       cell,
+		Game:       *game,
 	}
 	c.JSON(http.StatusOK, Response{
 		Status:  http.StatusOK,

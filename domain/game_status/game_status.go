@@ -8,6 +8,7 @@ const Lose = "You lose!"
 const Won = "You Won!"
 
 type GameStatus struct {
+	Alive  bool   `json:"alive"`
 	Status string `json:"status"`
 	Won    string `json:"won"`
 }

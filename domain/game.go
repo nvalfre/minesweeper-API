@@ -34,12 +34,13 @@ type Game struct {
 	Flags        int64                  `json:"flags"`
 	OpenCells    int64                  `json:"open_cells"`
 	CoveredCells int64                  `json:"covered_cells"`
-	GameStatus   game_status.GameStatus `json:"finished"`
+	GameStatus   game_status.GameStatus `json:"-"`
 }
 
 type ClickResult struct {
-	Cell Cell
-	Game Game
+	Cell       Cell
+	Game       Game
+	GameStatus game_status.GameStatus
 }
 
 type CellPos struct {

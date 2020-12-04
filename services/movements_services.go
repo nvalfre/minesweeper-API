@@ -41,6 +41,7 @@ func (s *MovementService) ClickCell() error {
 	if pos.Mine {
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Lose
+		s.game.GameStatus.Alive = false
 		return nil
 	}
 	s.open(pos.Column, pos.Row)
