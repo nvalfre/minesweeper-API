@@ -4,22 +4,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
+	"minesweeper-API/builder"
 	"minesweeper-API/domain"
 	"minesweeper-API/services"
 	"net/http"
 	"strconv"
-	"time"
 )
-
-const defaultDurationTime = 10 * time.Minute
-const defaultStartClick = 0
 
 var db = memory.New()
 var gameStore = memory.NewGameStore(db)
-var Controller gameControllerInterface = &gameController{services.GameService{Store: gameStore}}
+var Controller gameControllerInterface = &gameController{
+	services.GameService{Store: gameStore},
+	builder.GameBuilderService{
+		Store: gameStore,
+	}}
 
 type gameControllerInterface interface {
 	StartNewGame(c *gin.Context)
@@ -30,7 +30,8 @@ type gameControllerInterface interface {
 	GetHistory(c *gin.Context)
 }
 type gameController struct {
-	GameService services.GameService
+	GameService        services.GameService
+	GameBuilderService builder.GameBuilderService
 }
 
 func (controller *gameController) StartNewGame(c *gin.Context) {
@@ -39,7 +40,7 @@ func (controller *gameController) StartNewGame(c *gin.Context) {
 	columns, _ := strconv.ParseInt(c.Query("columns"), 10, 64)
 	mines, _ := strconv.ParseInt(c.Query("mines"), 10, 64)
 
-	game, err := controller.buildNewGame(name, rows, columns, mines)
+	game, err := controller.GameBuilderService.BuildNewGame(name, rows, columns, mines)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
 			"file":    "game_controller",
@@ -124,30 +125,6 @@ func (controller *gameController) ResumeGame(c *gin.Context) {
 		Message: game.GameStatus,
 	})
 	return
-}
-
-func (controller *gameController) buildNewGame(name string, rows, columns, mines int64) (*domain.Game, error) {
-	game := &domain.Game{
-		Timer:  time.NewTimer(defaultDurationTime),
-		Name:   name,
-		UUID:   fmt.Sprintf("%v", uuid.New()),
-		Rows:   rows,
-		Cols:   columns,
-		Mines:  mines,
-		Grid:   nil,
-		Clicks: defaultStartClick,
-	}
-	logrus.WithFields(logrus.Fields{
-		"file":    "game_controller",
-		"service": "create",
-		"method":  "StartNewGame",
-		"game":    game,
-	})
-	err := controller.GameService.Create(game)
-	if err != nil {
-		return nil, err
-	}
-	return game, err
 }
 
 func (controller *gameController) ClickPosition(c *gin.Context) {

@@ -10,18 +10,7 @@ import (
 	"minesweeper-API/domain/game_status"
 )
 
-const (
-	defaultCols  = 8
-	defaultRows  = 8
-	defaultMines = 10
-	maxCols      = 16
-	maxRows      = 30
-	minMines     = 10
-	maxMines     = 99
-)
-
 type GameServiceInterface interface {
-	Create(game *domain.Game) error
 	History() (map[string]*domain.Game, error)
 	StartGame(game *domain.Game) (*domain.Game, error)
 	Start(name string) (*domain.Game, error)
@@ -34,45 +23,6 @@ type GameServiceInterface interface {
 type GameService struct {
 	Store           memory.GameStoreInterface
 	MovementService MovementService
-}
-
-func (s *GameService) Create(game *domain.Game) error {
-	if game.Name == "" {
-		return errors.New("no Game name")
-	}
-
-	if game.Rows < defaultRows {
-		game.Rows = defaultRows
-	}
-	if game.Cols < defaultCols {
-		game.Cols = defaultCols
-	}
-	if game.Mines < defaultMines {
-		game.Mines = defaultMines
-	}
-
-	if game.Rows > maxRows {
-		game.Rows = maxRows
-	}
-	if game.Cols > maxCols {
-		game.Cols = maxCols
-	}
-
-	if game.Mines > maxMines {
-		game.Mines = maxMines
-	}
-
-	if game.Mines < minMines {
-		game.Mines = minMines
-	}
-
-	game.GameStatus = game_status.GameStatus{
-		Alive:  true,
-		Status: game_status.WaitingForStart,
-	}
-
-	err := s.Store.Insert(game)
-	return err
 }
 
 func (s *GameService) History() (map[string]*domain.Game, error) {
