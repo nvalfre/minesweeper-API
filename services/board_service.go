@@ -11,14 +11,15 @@ func init() {
 }
 
 func BuildBoard(game *domain.Game) {
-	numCells := game.Rows * game.Cols
-	cells := make(domain.CellGrid, numCells)
-
-	generateRandomPositions(game, numCells, cells)
+	generateRandomPositions(game)
 	setCellValues(game)
 }
 
-func generateRandomPositions(game *domain.Game, numCells int64, cells domain.CellGrid) {
+func generateRandomPositions(game *domain.Game) {
+	numCells := game.Rows * game.Cols
+
+	cells := make(domain.CellGrid, numCells)
+
 	i := 0
 	for int64(i) < game.Mines {
 		idx := rand.Intn(int(numCells))
