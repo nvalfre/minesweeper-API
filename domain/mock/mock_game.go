@@ -11,38 +11,40 @@ var (
 	MockCell11     = getMockCell(1, 1)
 	MockCell12     = getMockCell(1, 2)
 	MockCell21     = getMockCell(2, 1)
-	MockCell21bomb = domain.Cell{
+	MockCell01Bomb = domain.Cell{
 		Row:    0,
-		Column: 0,
-		Mine:   false,
+		Column: 1,
+		Mine:   true,
+	}
+	MockCell12Bomb = domain.Cell{
+		Row:    1,
+		Column: 2,
+		Mine:   true,
+	}
+	MockCell21bomb = domain.Cell{
+		Row:    2,
+		Column: 1,
+		Mine:   true,
 	}
 	MockCell22   = getMockCell(2, 2)
-	Grid         = initGridDefault()
-	GridWithBomb = initGridBomb()
+	Grid         = []domain.CellGrid{{MockCell0, MockCell01}, {MockCell11, MockCell12}, {MockCell21, MockCell22}}
+	GridWithBomb = []domain.CellGrid{{MockCell0, MockCell01}, {MockCell11, MockCell12}, {MockCell21bomb, MockCell22}}
 
 	Game = domain.Game{
-		Rows:       2,
+		Rows:       3,
 		Cols:       2,
 		Mines:      2,
 		Grid:       Grid,
 		GameStatus: game_status.GameStatus{Status: game_status.Started},
 	}
 	GameBomb = domain.Game{
-		Rows:       2,
+		Rows:       3,
 		Cols:       2,
 		Mines:      2,
 		Grid:       GridWithBomb,
 		GameStatus: game_status.GameStatus{Status: game_status.Started},
 	}
 )
-
-func initGridBomb() []domain.CellGrid {
-	return []domain.CellGrid{{MockCell0, MockCell01}, {MockCell11, MockCell12}, {MockCell21bomb, MockCell22}}
-}
-
-func initGridDefault() []domain.CellGrid {
-	return []domain.CellGrid{{MockCell0, MockCell01}, {MockCell11, MockCell12}, {MockCell21, MockCell22}}
-}
 
 func getMockCell(row, column int64) domain.Cell {
 	return domain.Cell{
