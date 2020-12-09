@@ -4,16 +4,16 @@ import "minesweeper-API/domain"
 
 func MineCount(game *domain.Game, grid []domain.CellGrid, pos *domain.Cell) int {
 	var count int
-	count += isBomb(game, grid, pos.Column-1, pos.Row)
-	count += isBomb(game, grid, pos.Column+1, pos.Row)
+	count += isBomb(game, grid, pos.Row, pos.Column-1)
+	count += isBomb(game, grid, pos.Row, pos.Column+1)
 
-	count += isBomb(game, grid, pos.Column, pos.Row-1)
-	count += isBomb(game, grid, pos.Column, pos.Row+1)
+	count += isBomb(game, grid, pos.Row-1, pos.Column)
+	count += isBomb(game, grid, pos.Row+1, pos.Column)
 
-	count += isBomb(game, grid, pos.Column-1, pos.Row-1)
-	count += isBomb(game, grid, pos.Column+1, pos.Row+1)
-	count += isBomb(game, grid, pos.Column+1, pos.Row-1)
-	count += isBomb(game, grid, pos.Column-1, pos.Row+1)
+	count += isBomb(game, grid, pos.Row-1, pos.Column-1)
+	count += isBomb(game, grid, pos.Row+1, pos.Column+1)
+	count += isBomb(game, grid, pos.Row-1, pos.Column+1)
+	count += isBomb(game, grid, pos.Row+1, pos.Column-1)
 	return count
 }
 

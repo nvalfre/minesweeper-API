@@ -88,23 +88,23 @@ func (s *MovementService) getCurrentPos() *domain.Cell {
 	return &s.game.Grid[s.clickPosition.Row][s.clickPosition.Col]
 }
 
-func (s *MovementService) getPositionOffset(column, row int64) *domain.Cell {
-	return &s.game.Grid[column][row]
+func (s *MovementService) getPositionOffset(row, column int64) *domain.Cell {
+	return &s.game.Grid[row][column]
 }
 
-func (s *MovementService) openAdjacent(column, row int64) {
+func (s *MovementService) openAdjacent(row, column int64) {
 	if maximum := (s.game.Rows * s.game.Cols) / (maxPorcentageOfBoardOpened * base); s.clickOpenCellsCount == maximum {
 		return
 	}
 
-	if !utils.IsValidPosition(s.game, column, row) {
+	if !utils.IsValidPosition(s.game, row, column) {
 		return
 	}
-	pos := s.getPositionOffset(column, row)
+	pos := s.getPositionOffset(row, column)
 	if pos.Covered || pos.Opened || pos.Mine {
 		return
 	}
-	if s.isCurrentPosition(column, row) {
+	if s.isCurrentPosition(row, column) {
 		pos.Covered = true
 		s.game.CoveredCells++
 	} else {
@@ -117,16 +117,16 @@ func (s *MovementService) openAdjacent(column, row int64) {
 		s.getCurrentPos().AdjacentBombs = mineCount
 		return
 	}
-	s.openAdjacent(column-1, row)
-	s.openAdjacent(column+1, row)
+	s.openAdjacent(row, column-1)
+	s.openAdjacent(row, column+1)
 
-	s.openAdjacent(column, row-1)
-	s.openAdjacent(column, row+1)
+	s.openAdjacent(row-1, column)
+	s.openAdjacent(row+1, column)
 
-	s.openAdjacent(column-1, row-1)
-	s.openAdjacent(column+1, row+1)
-	s.openAdjacent(column+1, row-1)
-	s.openAdjacent(column-1, row+1)
+	s.openAdjacent(row-1, column-1)
+	s.openAdjacent(row+1, column+1)
+	s.openAdjacent(row-1, column+1)
+	s.openAdjacent(row+1, column-1)
 }
 
 func (s *MovementService) isGameFinished() bool {

@@ -11,7 +11,7 @@ func init() {
 }
 
 func BuildBoard(game *domain.Game) {
-	numCells := game.Cols * game.Rows
+	numCells := game.Rows * game.Cols
 	cells := make(domain.CellGrid, numCells)
 
 	generateRandomPositions(game, numCells, cells)
