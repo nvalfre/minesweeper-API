@@ -6,8 +6,8 @@ import (
 )
 
 type Cell struct {
-	Column int64 `json:"column"`
 	Row    int64 `json:"row"`
+	Column int64 `json:"column"`
 
 	StartingAdjacentBombs int `json:"value"`
 	AdjacentBombs         int `json:"adjacent_bombs"`
