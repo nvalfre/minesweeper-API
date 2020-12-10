@@ -19,6 +19,7 @@ minesweeper-API-server
 ### Usage
 ####Endpoints Example
 #####- Create game 3x3x1 transforms => 8x8x10
+
 `	
 			"request": {
 				"method": "POST",
