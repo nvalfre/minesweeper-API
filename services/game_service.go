@@ -79,7 +79,9 @@ func (s *GameService) Click(name string, pos *domain.CellPos) (*domain.Game, err
 	if err != nil {
 		return nil, err
 	}
-
+	if game.GameStatus.Status == game_status.Finished {
+		return game, nil
+	}
 	grid, err := s.Store.GetByNameGrid(name)
 	game.Grid = *grid
 	if err != nil {
@@ -110,6 +112,9 @@ func (s *GameService) FlagClick(name string, pos *domain.CellPos) (*domain.Game,
 	if err != nil {
 		return nil, err
 	}
+	if game.GameStatus.Status == game_status.Finished {
+		return game, nil
+	}
 
 	grid, err := s.Store.GetByNameGrid(name)
 	game.Grid = *grid
@@ -138,6 +143,9 @@ func (s *GameService) Pause(name string) (*domain.Game, error) {
 	if err != nil {
 		return nil, err
 	}
+	if game.GameStatus.Status == game_status.Finished {
+		return game, nil
+	}
 
 	game.GameStatus.Status = game_status.Paused
 	if err := s.Store.Update(game); err != nil {
@@ -150,6 +158,9 @@ func (s *GameService) Resume(name string) (*domain.Game, error) {
 	game, err := s.Store.GetByName(name)
 	if err != nil {
 		return nil, err
+	}
+	if game.GameStatus.Status == game_status.Finished {
+		return game, nil
 	}
 
 	game.GameStatus.Status = game_status.Started
