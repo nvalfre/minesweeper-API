@@ -2,6 +2,7 @@ package domain
 
 import (
 	"minesweeper-API/domain/game_status"
+	"strconv"
 	"time"
 )
 
@@ -24,7 +25,8 @@ type CellGrid []Cell
 
 type Game struct {
 	Timer        *time.Timer            `json:"-"`
-	TimerStr     string                 `json:"timer"`
+	Time         time.Time              `json:"time"`
+	Remaining    string                 `json:"time_remaining"`
 	Name         string                 `json:"name"`
 	UUID         string                 `json:"uuid"`
 	Rows         int64                  `json:"rows"`
@@ -36,6 +38,11 @@ type Game struct {
 	OpenCells    int64                  `json:"open_cells"`
 	CoveredCells int64                  `json:"covered_cells"`
 	GameStatus   game_status.GameStatus `json:"-"`
+}
+
+func (g *Game) TimeRemaining() {
+	remaining := g.Time.Sub(time.Now())
+	g.Remaining = strconv.FormatInt(int64(remaining), 10)
 }
 
 type ClickResult struct {

@@ -30,6 +30,7 @@ type GameBuilderServiceInterface interface {
 func (s *GameBuilderService) BuildNewGame(name string, rows, columns, mines int64) (*domain.Game, error) {
 	game := &domain.Game{
 		Timer:  time.NewTimer(defaultDurationTime),
+		Time:   time.Now().Add(defaultDurationTime),
 		Name:   name,
 		UUID:   fmt.Sprintf("%v", uuid.New()),
 		Rows:   rows,

@@ -5,6 +5,7 @@ import (
 	"minesweeper-API/domain"
 	"minesweeper-API/domain/game_status"
 	"minesweeper-API/utils"
+	"time"
 )
 
 const maxPorcentageOfBoardOpened = 0.3
@@ -41,6 +42,8 @@ func (s *MovementService) ClickCell() error {
 	s.clickOpenCellsCount = initCount
 	s.openAdjacent(pos.Column, pos.Row)
 	if s.isGameFinished() {
+		s.game.Timer.Stop()
+		s.game.Time = time.Now()
 		s.game.GameStatus.Status = game_status.Finished
 		s.game.GameStatus.Won = game_status.Won
 	}
