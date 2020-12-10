@@ -2,6 +2,7 @@ package memory
 
 import (
 	"errors"
+	"fmt"
 	"minesweeper-API/domain"
 	"minesweeper-API/domain/game_status"
 )
@@ -38,6 +39,7 @@ func (s *GameStore) Update(game *domain.Game) error {
 		return errors.New("game do not exist")
 	}
 	s.db.games[game.Name] = &g
+	game.TimerStr = fmt.Sprintf("%v", game.Timer)
 	if g.Clicks == 0 && g.Flags == 0 && g.GameStatus.Status == game_status.WaitingForStart {
 		game.GameStatus.Status = game_status.Started
 		if err := s.insertGrid(&g); err != nil {

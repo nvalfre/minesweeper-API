@@ -4009,6 +4009,7 @@ minesweeper-API-server
                           			}]
 		}`
 }
+
 ### Backlog
 **Backend Requierements:**
   - Setup environment
@@ -4020,13 +4021,11 @@ minesweeper-API-server
   - Add game constants, start, over, cell flag, cell positions, status, etc.
   - Add mappings & controllers, map each request unmarshall json body by request domain defined: 
     - POST: Start new game - weithht(column & rows) & (Number of mines)
-    - POST: Restart current game game name
-    - POST: Pause game
-    - POST: Resume game
-    - GET: Last Game Action
-    - GET: Game Action History
-    - POST: Post new click movement
-    - GET: Game history details
+    - PUT: Pause game
+    - PUT: Resume game
+    - PUT: Post new click movement
+    - PUT: Post new click FLAG movement
+    - GET: Game history
   - Generate services:
     - Game service
       -> Generate a criteria value by params, validate some maximum dificult && dimensions
@@ -4037,7 +4036,6 @@ minesweeper-API-server
       -> Pause & Resume games
       -> End game validation for each position in status flagged, visited or revealed, if the difference between the number of bombs (not revealed) and the flag bombs safed is equals to the number of positions opens, win.
       -> End game by action validation exploit bomb
-      -> Force endgame if timer is done
       -> Add time tracking service with channels
       -> Add movement x, y publish 
         -> Validation and exploit if bomb, end game
@@ -4047,14 +4045,3 @@ minesweeper-API-server
   - Generate DAOS
     - Game
     
-**Frontend - Client side - Pretended: flutter app with dart.**
-  - Setup env
-  - Setup rest providers with http calls
-  - Setup routes & views
-  - Build home view, if have a current game resume option, else start game
-  - Build game start options view
-  - Build board render view with maximum columns with some positions object
-  - Build movements events on dashboard positions(onclick, doble click or right click or a flag)
-  - Build game history view just list by user.
-  - Deploy onto github with hummingbird
-  
