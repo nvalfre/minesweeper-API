@@ -38,7 +38,8 @@ func (s *GameStore) Update(game *domain.Game) error {
 		return errors.New("game do not exist")
 	}
 	s.db.games[game.Name] = &g
-	if g.Clicks == 0 {
+	if g.Clicks == 0 && g.Flags == 0 && g.GameStatus.Status == game_status.WaitingForStart {
+		game.GameStatus.Status = game_status.Started
 		if err := s.insertGrid(&g); err != nil {
 			return errors.New("can't insert grid on memory")
 		} else {

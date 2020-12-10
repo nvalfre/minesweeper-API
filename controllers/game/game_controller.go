@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"minesweeper-API/app/memory"
-	"minesweeper-API/builder"
 	"minesweeper-API/domain"
 	"minesweeper-API/services"
+	"minesweeper-API/services/builder"
 	"net/http"
 	"strconv"
 )

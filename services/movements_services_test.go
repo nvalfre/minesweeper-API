@@ -29,16 +29,6 @@ func TestMovementService_getCurrentPos(t *testing.T) {
 			},
 			clickOpenCellsCount: 0,
 		}, &mock.MockCell12},
-		{"get_current_pos:Ok", fields{
-			game: &mock.Game,
-			grid: &mock.Grid,
-			clickPosition: &domain.CellPos{
-				Row:  1,
-				Col:  1,
-				Flag: false,
-			},
-			clickOpenCellsCount: 0,
-		}, &mock.MockCell12},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -49,7 +39,7 @@ func TestMovementService_getCurrentPos(t *testing.T) {
 				clickOpenCellsCount: tt.fields.clickOpenCellsCount,
 			}
 			if got := s.getCurrentPos(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("getCurrentPos() = %v, want22 %v", got, tt.want)
+				t.Errorf("getCurrentPos() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -9,7 +9,7 @@ var (
 	MockCell0      = getMockCell(0, 0)
 	MockCell01     = getMockCell(0, 1)
 	MockCell11     = getMockCell(1, 1)
-	MockCell12     = getMockCell(1, 2)
+	MockCell12     = getMockCell(1, 1)
 	MockCell21     = getMockCell(2, 1)
 	MockCell01Bomb = domain.Cell{
 		Row:    0,
@@ -31,6 +31,7 @@ var (
 	GridWithBomb = []domain.CellGrid{{MockCell0, MockCell01}, {MockCell11, MockCell12}, {MockCell21bomb, MockCell22}}
 
 	Game = domain.Game{
+		Name:       "game_mock",
 		Rows:       3,
 		Cols:       2,
 		Mines:      2,
@@ -38,6 +39,7 @@ var (
 		GameStatus: game_status.GameStatus{Status: game_status.Started},
 	}
 	GameBomb = domain.Game{
+		Name:       "game_bomb_mock",
 		Rows:       3,
 		Cols:       2,
 		Mines:      2,

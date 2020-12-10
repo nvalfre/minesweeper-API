@@ -66,8 +66,6 @@ func (s *GameService) Start(name string) (*domain.Game, error) {
 
 	BuildBoard(game)
 
-	game.GameStatus.Status = game_status.Started
-
 	err = s.Store.Update(game)
 
 	grid, _ := json.Marshal(game.Grid)
